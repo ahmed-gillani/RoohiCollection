@@ -30,9 +30,9 @@ export default function Home() {
 
   return (
     <>
-      <section className="hero" style={{ backgroundImage: `url(${heroKids})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <div className="wrap">
-          <p className="kicker">Kids Collection 2026</p>
+      <section className="hero" style={{ backgroundImage: `url(${heroKids})` }}>
+        <p className="kicker">Kids Collection 2026</p>
+        <div>
           <h1>Quality Comfort <br />for Growing Kids</h1>
           <p className="sub">
             Discover Myra Kids — thoughtfully designed clothing in premium fabrics, made for every moment of childhood.
