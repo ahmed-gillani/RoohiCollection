@@ -16,14 +16,18 @@ export default function Account() {
 
   if (!user) {
     return (
-      <div className="wrap" style={{ padding: '90px 0', textAlign: 'center' }}>
-        <h1 className="page-title">My Account</h1>
-        <p style={{ color: 'var(--sub)', marginBottom: 24 }}>
-          Sign in to view your orders, wishlist and saved details.
-        </p>
-        <Button onClick={() => { setAuthMode('login'); setAuthOpen(true); }}>Login</Button>{' '}
-        <Button variant="outline" onClick={() => { setAuthMode('register'); setAuthOpen(true); }}>Register</Button>
-        <AuthModal open={authOpen} initialMode={authMode} onClose={() => setAuthOpen(false)} />
+      <div className="page-center">
+        <div style={{ textAlign: 'center' }}>
+          <h1 className="page-title">My Account</h1>
+          <p style={{ color: 'var(--sub)', marginBottom: 24 }}>
+            Sign in to view your orders, wishlist and saved details.
+          </p>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Button onClick={() => { setAuthMode('login'); setAuthOpen(true); }} style={{ minWidth: 140 }}>Login</Button>
+            <Button variant="outline" onClick={() => { setAuthMode('register'); setAuthOpen(true); }} style={{ minWidth: 140 }}>Register</Button>
+          </div>
+          <AuthModal open={authOpen} initialMode={authMode} onClose={() => setAuthOpen(false)} />
+        </div>
       </div>
     );
   }

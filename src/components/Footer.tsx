@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Footer() {
   return (
     <footer>
@@ -12,7 +14,11 @@ export default function Footer() {
           <div>
             <h5>Shop</h5>
             <ul>
-              <li>New Arrivals</li><li>Boys</li><li>Girls</li><li>Infants</li><li>Sale</li>
+              <li><Link to="/shop?cat=New%20Arrivals">New Arrivals</Link></li>
+              <li><Link to="/shop?cat=Boys">Boys</Link></li>
+              <li><Link to="/shop?cat=Girls">Girls</Link></li>
+              <li><Link to="/shop?cat=Infants">Infants</Link></li>
+              <li><Link to="/shop?cat=Sale">Sale</Link></li>
             </ul>
           </div>
           <div>

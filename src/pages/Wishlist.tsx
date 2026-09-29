@@ -10,7 +10,7 @@ export default function Wishlist() {
 
   if (!items.length) {
     return (
-      <div className="wrap">
+      <div className="page-center">
         <EmptyState
           icon="♡"
           title="Your wishlist is empty"

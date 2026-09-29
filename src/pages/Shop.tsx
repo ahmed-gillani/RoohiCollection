@@ -10,21 +10,28 @@ const DEFAULT_FILTERS: ShopFilters = {
 };
 
 export default function Shop() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [filters, setFilters] = useState<ShopFilters>({
     ...DEFAULT_FILTERS,
-    cat: searchParams.get('cat') ?? '',
-    q: searchParams.get('q') ?? '',
+    sizes: [],
+    colors: [],
+    min: '',
+    max: '',
+    avail: false,
+    sort: 'newest',
   });
 
   const categories = useMemo(() => [...new Set(PRODUCTS.map((p) => p.cat))], []);
   const allSizes = useMemo(() => [...new Set(PRODUCTS.flatMap((p) => p.sizes))], []);
   const allColors = useMemo(() => [...new Set(PRODUCTS.flatMap((p) => p.colors))], []);
 
+  const cat = searchParams.get('cat') ?? '';
+  const q = searchParams.get('q') ?? '';
+
   const list = useMemo(() => {
     let result = [...PRODUCTS];
-    if (filters.cat) result = result.filter((p) => p.cat === filters.cat || (filters.cat === 'Sale' && p.sale));
-    if (filters.q) result = result.filter((p) => p.name.toLowerCase().includes(filters.q.toLowerCase()));
+    if (cat) result = result.filter((p) => p.cat === cat || (cat === 'Sale' && p.sale));
+    if (q) result = result.filter((p) => p.name.toLowerCase().includes(q.toLowerCase()));
     if (filters.sizes.length) result = result.filter((p) => p.sizes.some((s) => filters.sizes.includes(s)));
     if (filters.colors.length) result = result.filter((p) => p.colors.some((c) => filters.colors.includes(c)));
     if (filters.min) result = result.filter((p) => p.price >= Number(filters.min));
@@ -37,25 +44,44 @@ export default function Shop() {
     else result.sort((a, b) => Number(b.isNew) - Number(a.isNew));
 
     return result;
-  }, [filters]);
+  }, [cat, q, filters]);
 
-  const updateFilters = (next: Partial<ShopFilters>) => setFilters((prev) => ({ ...prev, ...next }));
+  const updateFilters = (next: Partial<ShopFilters>) => {
+    if (next.cat !== undefined) {
+      if (next.cat) {
+        setSearchParams({ cat: next.cat, q }, { replace: true });
+      } else {
+        setSearchParams(q ? { q } : {}, { replace: true });
+      }
+    } else if (next.q !== undefined) {
+      if (next.q) {
+        setSearchParams({ q: next.q, ...(cat ? { cat } : {}) }, { replace: true });
+      } else {
+        setSearchParams(cat ? { cat } : {}, { replace: true });
+      }
+    } else {
+      setFilters((prev) => ({ ...prev, ...next }));
+    }
+  };
 
   return (
     <div className="wrap" style={{ paddingTop: 36 }}>
       <div className="breadcrumb">
         <Link to="/">Home</Link> / Shop
       </div>
-      <h1 className="page-title">{filters.cat || 'All Products'}</h1>
+      <h1 className="page-title">{cat || 'All Products'}</h1>
       <p style={{ color: 'var(--sub)', marginBottom: 30, fontSize: 14 }}>{list.length} products</p>
       <div className="shop-layout">
         <Filters
-          filters={filters}
+          filters={{ ...filters, cat, q }}
           categories={categories}
           allSizes={allSizes}
           allColors={allColors}
           onChange={updateFilters}
-          onClear={() => setFilters(DEFAULT_FILTERS)}
+          onClear={() => {
+            setSearchParams({}, { replace: true });
+            setFilters(DEFAULT_FILTERS);
+          }}
         />
         <div>
           <div className="shop-toolbar">

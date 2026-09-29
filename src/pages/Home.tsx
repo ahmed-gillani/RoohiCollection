@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PRODUCTS, REVIEWS } from '@/data/products';
 import ProductGrid from '@/components/ProductGrid';
@@ -24,20 +25,38 @@ const CATEGORIES: [string, string][] = [
 
 export default function Home() {
   const { showToast } = useToast();
+  const [email, setEmail] = useState('');
+  const [emailMsg, setEmailMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
   const featured = PRODUCTS.slice(0, 4);
   const arrivals = PRODUCTS.filter((p) => p.isNew).slice(0, 4);
   const bestSellers = [...PRODUCTS].sort((a, b) => b.rating - a.rating).slice(0, 4);
 
+  const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailMsg({ type: 'error', text: 'Please enter a valid email address.' });
+      return;
+    }
+    setEmailMsg({ type: 'success', text: 'Subscribed successfully!' });
+    setEmail('');
+    showToast('Subscribed successfully!');
+    setTimeout(() => setEmailMsg(null), 3000);
+  };
+
   return (
     <>
       <section className="hero" style={{ backgroundImage: `url(${heroKids})` }}>
-        <p className="kicker">Kids Collection 2026</p>
-        <div>
-          <h1>Quality Comfort <br />for Growing Kids</h1>
-          <p className="sub">
-            Discover Myra Kids — thoughtfully designed clothing in premium fabrics, made for every moment of childhood.
-          </p>
-          <Link to="/shop" className="btn btn-primary">Shop The Collection</Link>
+        <div className="wrap">
+          <div className="hero-copy">
+            <p className="kicker">Kids Collection 2026</p>
+            <h1>Quality Comfort <br />for Growing Kids</h1>
+            <p className="sub">
+              Discover RoohiCollection — thoughtfully designed clothing in premium fabrics, made for every moment of childhood.
+            </p>
+            <Link to="/shop" className="btn btn-primary">Shop The Collection</Link>
+          </div>
         </div>
       </section>
 
@@ -105,15 +124,24 @@ export default function Home() {
         <p style={{ color: 'var(--sub)', fontSize: 14, marginTop: 8 }}>
           Be first to know about new arrivals and exclusive offers.
         </p>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            showToast('Subscribed successfully!');
-            e.currentTarget.reset();
-          }}
-        >
-          <input type="email" required placeholder="Enter your email address" />
+        <form onSubmit={handleNewsletterSubmit}>
+          <input
+            type="email"
+            placeholder="Enter your email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            aria-label="Email address"
+          />
           <Button type="submit">Subscribe</Button>
+          {emailMsg && (
+            <div
+              className={`form-msg show ${emailMsg.type}`}
+              role="status"
+              aria-live="polite"
+            >
+              {emailMsg.text}
+            </div>
+          )}
         </form>
       </div>
     </>
