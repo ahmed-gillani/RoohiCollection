@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Toast from '@/components/Toast';
+import ScrollToTop from '@/components/ScrollToTop';
 import { CartProvider } from '@/context/CartContext';
 import { WishlistProvider } from '@/context/WishlistContext';
 import { AuthProvider } from '@/context/AuthContext';
@@ -35,6 +36,7 @@ function Providers({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <Providers>
+      <ScrollToTop />
       <div className="app">
         <Navbar />
         <main>

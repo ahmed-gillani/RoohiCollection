@@ -8,7 +8,7 @@ const navItems = ['Home', 'Shop', 'Boys', 'Girls', 'Infants', 'Sale'] as const;
 function isNavActive(location: ReturnType<typeof useLocation>, item: string, searchParams: URLSearchParams) {
   const path = location.pathname;
   if (item === 'Home') return path === '/';
-  if (item === 'Shop') return path === '/shop' && !searchParams.has('cat');
+  if (item === 'Shop') return (path === '/shop' || path.startsWith('/product/')) && !searchParams.has('cat');
   return path === '/shop' && searchParams.get('cat') === item;
 }
 
@@ -112,18 +112,35 @@ export default function Navbar() {
           </button>
         </div>
       </div>
-      <div id="mobile-menu" className={`wrap mobile-menu ${menuOpen ? 'open' : ''}`}>
-        {navItems.map((item) => (
-          <Link
-            key={item}
-            to={getNavHref(item)}
-            onClick={() => setMenuOpen(false)}
-            className={isNavActive(location, item, searchParams) ? 'active' : ''}
-          >
-            {item}
-          </Link>
-        ))}
-        <Link to="/account" onClick={() => setMenuOpen(false)}>Account</Link>
+      <div id="mobile-menu" className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
+        <div className="search-box-mobile wrap" style={{ margin: '12px 0', padding: '0 24px' }}>
+          <SearchIcon />
+          <input
+            placeholder="Search..."
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                const value = (e.target as HTMLInputElement).value;
+                navigate(`/shop?q=${encodeURIComponent(value)}`);
+                setMenuOpen(false);
+              }
+            }}
+            aria-label="Search"
+          />
+        </div>
+        <div className="wrap" style={{ padding: '0 24px' }}>
+          {navItems.map((item) => (
+            <Link
+              key={item}
+              to={getNavHref(item)}
+              onClick={() => setMenuOpen(false)}
+              className={isNavActive(location, item, searchParams) ? 'active' : ''}
+              style={{ display: 'block', padding: '12px 0', borderBottom: '1px solid rgba(255,255,255,.1)' }}
+            >
+              {item}
+            </Link>
+          ))}
+          <Link to="/account" onClick={() => setMenuOpen(false)} style={{ display: 'block', padding: '12px 0' }}>Account</Link>
+        </div>
       </div>
     </header>
   );
