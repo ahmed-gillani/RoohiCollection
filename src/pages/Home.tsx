@@ -14,10 +14,10 @@ import traditionalImg from '@/assets/categories/traditional.jpg';
 import saleImg from '@/assets/categories/sale.jpg';
 
 const CATEGORIES: [string, string][] = [
-  ["Women's Clothing", girlsImg],
-  ["Men's Clothing", boysImg],
-  ['Dresses', infantsImg],
-  ['Traditional Wear', traditionalImg],
+  ['Boys', boysImg],
+  ['Girls', girlsImg],
+  ['Infants', infantsImg],
+  ['Traditional', traditionalImg],
   ['New Arrivals', newArrivalsImg],
   ['Sale', saleImg],
 ];
@@ -32,10 +32,10 @@ export default function Home() {
     <>
       <section className="hero" style={{ backgroundImage: `url(${heroKids})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="wrap">
-          <p className="kicker">Autumn Collection 2026</p>
-          <h1>Elegance, <br />Woven Into Every Thread</h1>
+          <p className="kicker">Kids Collection 2026</p>
+          <h1>Quality Comfort <br />for Growing Kids</h1>
           <p className="sub">
-            Discover RoohiCollections — considered clothing crafted from premium fabrics, designed for every moment of your life.
+            Discover Myra Kids — thoughtfully designed clothing in premium fabrics, made for every moment of childhood.
           </p>
           <Link to="/shop" className="btn btn-primary">Shop The Collection</Link>
         </div>

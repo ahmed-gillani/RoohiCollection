@@ -48,7 +48,7 @@ export default function AuthModal({ open, initialMode, onClose }: AuthModalProps
       {mode === 'login' && (
         <>
           <h2>Welcome Back</h2>
-          <p style={{ fontSize: 13, color: 'var(--sub)', marginBottom: 18 }}>Login to your RoohiCollections account</p>
+          <p style={{ fontSize: 13, color: 'var(--sub)', marginBottom: 18 }}>Login to your MyraKids account</p>
           <form onSubmit={handleLogin}>
             <div className="form-field">
               <label>Email</label>
@@ -71,7 +71,7 @@ export default function AuthModal({ open, initialMode, onClose }: AuthModalProps
       {mode === 'register' && (
         <>
           <h2>Create Account</h2>
-          <p style={{ fontSize: 13, color: 'var(--sub)', marginBottom: 18 }}>Join RoohiCollections today</p>
+          <p style={{ fontSize: 13, color: 'var(--sub)', marginBottom: 18 }}>Join MyraKids today</p>
           <form onSubmit={handleRegister}>
             <div className="form-field">
               <label>Full Name</label>

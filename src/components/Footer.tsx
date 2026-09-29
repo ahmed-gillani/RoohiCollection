@@ -4,15 +4,15 @@ export default function Footer() {
       <div className="wrap">
         <div className="foot-grid">
           <div>
-            <h5 className="serif" style={{ fontSize: 18, textTransform: 'none' }}>RoohiCollections</h5>
+            <h5 className="serif" style={{ fontSize: 18, textTransform: 'none' }}>MyraKids</h5>
             <p style={{ fontSize: 13, color: 'var(--sub)', maxWidth: 260, marginTop: 10, lineHeight: 1.6 }}>
-              Considered clothing for everyday elegance. Designed with intention, made to last.
+              Quality clothing for kids at every stage. Designed with comfort and style in mind.
             </p>
           </div>
           <div>
             <h5>Shop</h5>
             <ul>
-              <li>New Arrivals</li><li>Women's Clothing</li><li>Men's Clothing</li><li>Sale</li>
+              <li>New Arrivals</li><li>Boys</li><li>Girls</li><li>Infants</li><li>Sale</li>
             </ul>
           </div>
           <div>
@@ -28,7 +28,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="foot-bottom">© 2026 RoohiCollections. All rights reserved.</div>
+        <div className="foot-bottom">© 2026 MyraKids. All rights reserved.</div>
       </div>
     </footer>
   );

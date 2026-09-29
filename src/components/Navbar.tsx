@@ -21,13 +21,13 @@ export default function Navbar() {
     <header>
      
       <div className="wrap nav">
-        <Link to="/" className="logo">RoohiCollections</Link>
+        <Link to="/" className="logo">MyraKids</Link>
         <nav className="nav-links">
           <Link to="/">Home</Link>
           <Link to="/shop">Shop</Link>
-          <Link to="/shop?cat=Women's Clothing">Women</Link>
-          <Link to="/shop?cat=Men's Clothing">Men</Link>
-          <Link to="/shop?cat=New Arrivals">New Arrivals</Link>
+          <Link to="/shop?cat=Boys">Boys</Link>
+          <Link to="/shop?cat=Girls">Girls</Link>
+          <Link to="/shop?cat=Infants">Infants</Link>
           <Link to="/shop?cat=Sale">Sale</Link>
         </nav>
         <div className="nav-icons">
@@ -48,9 +48,9 @@ export default function Navbar() {
       <div className={`wrap mobile-menu ${menuOpen ? 'open' : ''}`}>
         <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
         <Link to="/shop" onClick={() => setMenuOpen(false)}>Shop</Link>
-        <Link to="/shop?cat=Women's Clothing" onClick={() => setMenuOpen(false)}>Women</Link>
-        <Link to="/shop?cat=Men's Clothing" onClick={() => setMenuOpen(false)}>Men</Link>
-        <Link to="/shop?cat=New Arrivals" onClick={() => setMenuOpen(false)}>New Arrivals</Link>
+        <Link to="/shop?cat=Boys" onClick={() => setMenuOpen(false)}>Boys</Link>
+        <Link to="/shop?cat=Girls" onClick={() => setMenuOpen(false)}>Girls</Link>
+        <Link to="/shop?cat=Infants" onClick={() => setMenuOpen(false)}>Infants</Link>
         <Link to="/shop?cat=Sale" onClick={() => setMenuOpen(false)}>Sale</Link>
         <Link to="/account" onClick={() => setMenuOpen(false)}>Account</Link>
       </div>

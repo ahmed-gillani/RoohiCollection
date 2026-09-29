@@ -41,13 +41,15 @@ export default function ProductDetail() {
           <div className="pdp-gallery-main">
             <img src={product.gallery[imgIndex]} alt={`${product.name} - View ${imgIndex + 1}`} className="product-image" />
           </div>
-          <div className="thumb-row">
-            {[0, 1, 2].map((i) => (
-              <div key={i} className={`thumb ${imgIndex === i ? 'sel' : ''}`} onClick={() => setImgIndex(i)}>
-                <img src={product.gallery[i]} alt={`Thumbnail ${i + 1}`} className="product-image" />
-              </div>
-            ))}
-          </div>
+          {product.gallery.length > 1 && (
+            <div className="thumb-row">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className={`thumb ${imgIndex === i ? 'sel' : ''}`} onClick={() => setImgIndex(i)}>
+                  <img src={product.gallery[i]} alt={`Thumbnail ${i + 1}`} className="product-image" />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="pdp-info">
