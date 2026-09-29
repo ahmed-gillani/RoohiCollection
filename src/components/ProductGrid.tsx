@@ -8,8 +8,8 @@ export default function ProductGrid({ products }: { products: Product[] }) {
   }
   return (
     <div className="grid">
-      {products.map((p) => (
-        <ProductCard key={p.id} product={p} />
+      {products.map((p, i) => (
+        <ProductCard key={p.id} product={p} priority={i < 4} />
       ))}
     </div>
   );

@@ -63,7 +63,7 @@ export default function Home() {
           {CATEGORIES.map(([name, icon]) => (
             <Link className="cat-tile" key={name} to={`/shop?cat=${encodeURIComponent(name)}`}>
               <div className="ic">
-                <img src={icon} alt={name} className="product-image" />
+                <img src={icon} alt={name} className="product-image" loading="lazy" decoding="async" width={640} height={427} />
               </div>
               <h4>{name}</h4>
             </Link>
@@ -101,7 +101,7 @@ export default function Home() {
       </section>
 
       <div className="newsletter">
-        <h2 className="serif" style={{ fontSize: 26 }}>Join the RoohiCollections Circle</h2>
+        <h2 className="serif" style={{ fontSize: 26 }}>Join the RoohiCollection Circle</h2>
         <p style={{ color: 'var(--sub)', fontSize: 14, marginTop: 8 }}>
           Be first to know about new arrivals and exclusive offers.
         </p>

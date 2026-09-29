@@ -39,13 +39,13 @@ export default function ProductDetail() {
       <div className="pdp">
         <div>
           <div className="pdp-gallery-main">
-            <img src={product.gallery[imgIndex]} alt={`${product.name} - View ${imgIndex + 1}`} className="product-image" />
+            <img src={product.gallery[imgIndex]} alt={`${product.name} - View ${imgIndex + 1}`} className="product-image" decoding="async" fetchPriority="high" width={800} height={1067} />
           </div>
           {product.gallery.length > 1 && (
             <div className="thumb-row">
               {[0, 1, 2].map((i) => (
                 <div key={i} className={`thumb ${imgIndex === i ? 'sel' : ''}`} onClick={() => setImgIndex(i)}>
-                  <img src={product.gallery[i]} alt={`Thumbnail ${i + 1}`} className="product-image" />
+                  <img src={product.gallery[i]} alt={`Thumbnail ${i + 1}`} className="product-image" loading="lazy" decoding="async" width={64} height={80} />
                 </div>
               ))}
             </div>

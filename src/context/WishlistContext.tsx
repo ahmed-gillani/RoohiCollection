@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, useMemo, useCallback, type ReactNode } from 'react';
 import { useToast } from '@/context/ToastContext';
 
 interface WishlistContextValue {
@@ -13,7 +13,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   const [wishlist, setWishlist] = useState<number[]>([]);
   const { showToast } = useToast();
 
-  const toggleWish = (id: number) => {
+  const toggleWish = useCallback((id: number) => {
     setWishlist((prev) => {
       if (prev.includes(id)) {
         showToast('Removed from wishlist');
@@ -22,12 +22,14 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
       showToast('Added to wishlist');
       return [...prev, id];
     });
-  };
+  }, [showToast]);
 
-  const isWished = (id: number) => wishlist.includes(id);
+  const isWished = useCallback((id: number) => wishlist.includes(id), [wishlist]);
+
+  const value = useMemo(() => ({ wishlist, toggleWish, isWished }), [wishlist, toggleWish, isWished]);
 
   return (
-    <WishlistContext.Provider value={{ wishlist, toggleWish, isWished }}>
+    <WishlistContext.Provider value={value}>
       {children}
     </WishlistContext.Provider>
   );

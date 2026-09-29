@@ -21,7 +21,7 @@ export default function Navbar() {
     <header>
      
       <div className="wrap nav">
-        <Link to="/" className="logo">MyraKids</Link>
+        <Link to="/" className="logo">RoohiCollection</Link>
         <nav className="nav-links">
           <Link to="/">Home</Link>
           <Link to="/shop">Shop</Link>

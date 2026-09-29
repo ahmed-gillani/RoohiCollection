@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+import { memo } from 'react';
 import type { Product } from '@/types/product';
 import { useWishlist } from '@/context/WishlistContext';
 import { useCart } from '@/context/CartContext';
 import Button from '@/components/Button';
 
-export default function ProductCard({ product }: { product: Product }) {
+function ProductCard({ product, priority }: { product: Product; priority?: boolean }) {
   const navigate = useNavigate();
   const { isWished, toggleWish } = useWishlist();
   const { addToCart } = useCart();
@@ -25,7 +26,7 @@ export default function ProductCard({ product }: { product: Product }) {
         >
           {wished ? '♥' : '♡'}
         </button>
-        <img src={product.image} alt={product.name} className="product-image" />
+        <img src={product.image} alt={product.name} className="product-image" loading={priority ? "eager" : "lazy"} decoding="async" width={800} height={1067} fetchPriority={priority ? "high" : undefined} />
       </div>
       <div className="card-info">
         <div className="cat">{product.sub}</div>
@@ -51,3 +52,5 @@ export default function ProductCard({ product }: { product: Product }) {
     </div>
   );
 }
+
+export default memo(ProductCard);

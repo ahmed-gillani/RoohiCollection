@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="wrap">
         <div className="foot-grid">
           <div>
-            <h5 className="serif" style={{ fontSize: 18, textTransform: 'none' }}>MyraKids</h5>
+            <h5 className="serif" style={{ fontSize: 18, textTransform: 'none' }}>RoohiCollection</h5>
             <p style={{ fontSize: 13, color: 'var(--sub)', maxWidth: 260, marginTop: 10, lineHeight: 1.6 }}>
               Quality clothing for kids at every stage. Designed with comfort and style in mind.
             </p>
@@ -28,7 +28,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="foot-bottom">© 2026 MyraKids. All rights reserved.</div>
+        <div className="foot-bottom">© 2026 RoohiCollection. All rights reserved.</div>
       </div>
     </footer>
   );

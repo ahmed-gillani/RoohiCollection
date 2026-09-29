@@ -32,7 +32,7 @@ export default function Cart() {
             const p = findProduct(c.pid)!;
             return (
               <div className="cart-row" style={{ minWidth: 520 }} key={`${c.pid}-${c.size}-${c.color}`}>
-                <img src={p.image} alt={p.name} className="cart-thumb product-image" />
+                <img src={p.image} alt={p.name} className="cart-thumb product-image" loading="lazy" decoding="async" width={80} height={100} />
                 <div className="cart-meta">
                   <div className="name">{p.name}</div>
                   <div className="opt">
