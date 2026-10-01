@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="foot-grid">
           <div>
             <h5 className="serif" style={{ fontSize: 18, textTransform: 'none' }}>RoohiCollection</h5>
-            <p style={{ fontSize: 13, color: 'var(--sub)', maxWidth: 260, marginTop: 10, lineHeight: 1.6 }}>
+            <p className="foot-blurb">
               Quality clothing for kids at every stage. Designed with comfort and style in mind.
             </p>
           </div>

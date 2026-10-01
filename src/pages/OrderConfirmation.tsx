@@ -6,7 +6,7 @@ export default function OrderConfirmation() {
 
   if (!lastOrder) {
     return (
-      <div className="wrap" style={{ padding: '80px 0', textAlign: 'center' }}>
+      <div className="wrap" style={{ paddingBlock: '80px', textAlign: 'center' }}>
         <h2>No recent order found</h2>
         <Link className="btn btn-primary" style={{ marginTop: 20 }} to="/shop">Go to Shop</Link>
       </div>
@@ -14,7 +14,7 @@ export default function OrderConfirmation() {
   }
 
   return (
-    <div className="wrap" style={{ padding: '60px 0 90px' }}>
+    <div className="wrap" style={{ paddingTop: '60px', paddingBottom: '90px' }}>
       <div className="confirm-box">
         <div className="ic">✓</div>
         <h1 className="serif" style={{ fontSize: 30 }}>Thank you, your order is confirmed!</h1>

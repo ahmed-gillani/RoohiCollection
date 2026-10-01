@@ -3,6 +3,7 @@ import { PRODUCTS } from '@/data/products';
 import { useWishlist } from '@/context/WishlistContext';
 import ProductGrid from '@/components/ProductGrid';
 import EmptyState from '@/components/EmptyState';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export default function Wishlist() {
   const { wishlist } = useWishlist();
@@ -22,7 +23,8 @@ export default function Wishlist() {
   }
 
   return (
-    <div className="wrap" style={{ padding: '36px 0 80px' }}>
+    <div className="wrap" style={{ paddingTop: '36px', paddingBottom: '80px' }}>
+      <Breadcrumb items={[{ label: 'Wishlist' }]} />
       <h1 className="page-title">Your Wishlist</h1>
       <p style={{ color: 'var(--sub)', marginBottom: 26 }}>{items.length} items</p>
       <ProductGrid products={items} />

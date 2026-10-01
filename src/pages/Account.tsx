@@ -6,6 +6,7 @@ import { PRODUCTS } from '@/data/products';
 import ProductGrid from '@/components/ProductGrid';
 import Button from '@/components/Button';
 import AuthModal from '@/components/AuthModal';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export default function Account() {
   const { user, logout } = useAuth();
@@ -35,7 +36,8 @@ export default function Account() {
   const wishedProducts = PRODUCTS.filter((p) => wishlist.includes(p.id));
 
   return (
-    <div className="wrap" style={{ padding: '50px 0 90px' }}>
+    <div className="wrap" style={{ paddingTop: '50px', paddingBottom: '90px' }}>
+      <Breadcrumb items={[{ label: 'Account' }]} />
       <h1 className="page-title">Welcome, {user.name}</h1>
       <p style={{ color: 'var(--sub)', marginBottom: 30 }}>{user.email}</p>
 

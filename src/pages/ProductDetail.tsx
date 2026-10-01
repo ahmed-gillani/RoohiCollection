@@ -6,6 +6,7 @@ import { useWishlist } from '@/context/WishlistContext';
 import ProductGrid from '@/components/ProductGrid';
 import Stars from '@/components/Stars';
 import Button from '@/components/Button';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -21,7 +22,7 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="wrap" style={{ padding: '100px 0', textAlign: 'center' }}>
+      <div className="wrap" style={{ paddingBlock: '100px', textAlign: 'center' }}>
         <h2>Product not found</h2>
         <Link className="btn btn-primary" style={{ marginTop: 20 }} to="/shop">Back to Shop</Link>
       </div>
@@ -33,9 +34,16 @@ export default function ProductDetail() {
 
   return (
     <div className="wrap" style={{ paddingTop: 36 }}>
-      <div className="breadcrumb">
-        <Link to="/">Home</Link> / <Link to="/shop">Shop</Link> / {product.name}
-      </div>
+      <Breadcrumb
+        items={[
+          { label: 'Shop', to: '/shop' },
+          { label: product.cat, to: `/shop?cat=${encodeURIComponent(product.cat)}` },
+          ...(product.sub !== product.cat
+            ? [{ label: product.sub, to: `/shop?cat=${encodeURIComponent(product.cat)}&q=${encodeURIComponent(product.sub)}` }]
+            : []),
+          { label: product.name },
+        ]}
+      />
       <div className="pdp">
         <div>
           <div className="pdp-gallery-main">

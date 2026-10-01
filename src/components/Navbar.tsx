@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { useTheme } from '@/context/ThemeContext';
+import { PRODUCTS } from '@/data/products';
 
 const navItems = ['Home', 'Shop', 'Boys', 'Girls', 'Infants', 'Sale'] as const;
+// Mobile menu lists every category that exists in the product data
+const menuItems = ['Home', 'Shop', ...new Set(PRODUCTS.map((p) => p.cat))];
 
 function isNavActive(location: ReturnType<typeof useLocation>, item: string, searchParams: URLSearchParams) {
   const path = location.pathname;
@@ -60,6 +63,13 @@ const MoonIcon = () => (
   </svg>
 );
 
+const CloseIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </svg>
+);
+
 const MenuIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
     <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -70,25 +80,71 @@ const MenuIcon = () => (
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { count } = useCart();
   const { wishlist } = useWishlist();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
+  const mobileSearchRef = useRef<HTMLInputElement>(null);
+
+  // Close panels whenever the route changes
+  useEffect(() => {
+    setMenuOpen(false);
+    setSearchOpen(false);
+  }, [location.pathname, location.search]);
+
+  useEffect(() => {
+    if (!menuOpen && !searchOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMenuOpen(false);
+        setSearchOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen, searchOpen]);
+
+  useEffect(() => {
+    if (searchOpen) mobileSearchRef.current?.focus();
+  }, [searchOpen]);
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       const value = (e.target as HTMLInputElement).value;
       navigate(`/shop?q=${encodeURIComponent(value)}`);
       setMenuOpen(false);
+      setSearchOpen(false);
     }
+  };
+
+  const toggleMenu = () => {
+    setSearchOpen(false);
+    setMenuOpen((o) => !o);
+  };
+
+  const toggleSearch = () => {
+    setMenuOpen(false);
+    setSearchOpen((o) => !o);
   };
 
   return (
     <header>
       <div className="wrap nav">
-        <Link to="/" className="logo">RoohiCollection</Link>
+        <div className="nav-start">
+          <button
+            className="icon-btn hamburger"
+            onClick={toggleMenu}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+          >
+            {menuOpen ? <CloseIcon /> : <MenuIcon />}
+          </button>
+          <Link to="/" className="logo">RoohiCollection</Link>
+        </div>
         <nav className="nav-links" aria-label="Main navigation">
           {navItems.map((item) => (
             <Link
@@ -106,7 +162,16 @@ export default function Navbar() {
             <input placeholder="Search products..." onKeyDown={handleSearch} aria-label="Search" />
           </div>
           <button
-            className="icon-btn"
+            className="icon-btn search-toggle"
+            onClick={toggleSearch}
+            aria-label="Search"
+            aria-expanded={searchOpen}
+            aria-controls="mobile-search"
+          >
+            <SearchIcon />
+          </button>
+          <button
+            className="icon-btn theme-toggle"
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
@@ -124,47 +189,39 @@ export default function Navbar() {
             <CartIcon />
             {count > 0 && <span className="badge">{count}</span>}
           </button>
-          <button
-            className="hamburger"
-            onClick={() => setMenuOpen((o) => !o)}
-            aria-label="Menu"
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-          >
-            <MenuIcon />
-          </button>
         </div>
       </div>
-      <div id="mobile-menu" className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
-        <div className="search-box-mobile wrap" style={{ margin: '12px 0', padding: '0 24px' }}>
-          <SearchIcon />
-          <input
-            placeholder="Search..."
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                const value = (e.target as HTMLInputElement).value;
-                navigate(`/shop?q=${encodeURIComponent(value)}`);
-                setMenuOpen(false);
-              }
-            }}
-            aria-label="Search"
-          />
+
+      <div id="mobile-search" className={`mobile-search ${searchOpen ? 'open' : ''}`}>
+        <div className="wrap">
+          <div className="mobile-search-field">
+            <SearchIcon />
+            <input ref={mobileSearchRef} type="search" placeholder="Search products..." onKeyDown={handleSearch} aria-label="Search products" />
+          </div>
         </div>
-        <div className="wrap" style={{ padding: '0 24px' }}>
-          {navItems.map((item) => (
+      </div>
+
+      <nav id="mobile-menu" className={`mobile-menu ${menuOpen ? 'open' : ''}`} aria-label="Mobile navigation">
+        {/* Also close when tapping a link to the page already open (no route change) */}
+        <div className="wrap" onClick={(e) => { if ((e.target as HTMLElement).closest('a')) setMenuOpen(false); }}>
+          {menuItems.map((item) => (
             <Link
               key={item}
               to={getNavHref(item)}
-              onClick={() => setMenuOpen(false)}
               className={isNavActive(location, item, searchParams) ? 'active' : ''}
-              style={{ display: 'block', padding: '12px 0', borderBottom: '1px solid var(--hdr-line)' }}
             >
-              {item}
+              {item === 'Shop' ? 'Shop All' : item}
             </Link>
           ))}
-          <Link to="/account" onClick={() => setMenuOpen(false)} style={{ display: 'block', padding: '12px 0' }}>Account</Link>
+          <div className="mobile-menu-sep" />
+          <Link to="/account">Account</Link>
+          <Link to="/wishlist">Wishlist{wishlist.length > 0 ? ` (${wishlist.length})` : ''}</Link>
+          <button type="button" className="mobile-menu-theme" onClick={toggleTheme}>
+            {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+            {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+          </button>
         </div>
-      </div>
+      </nav>
     </header>
   );
 }

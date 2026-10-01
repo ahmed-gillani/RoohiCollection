@@ -4,6 +4,7 @@ import { useCart } from '@/context/CartContext';
 import { useOrder } from '@/context/OrderContext';
 import { findProduct } from '@/data/products';
 import Button from '@/components/Button';
+import Breadcrumb from '@/components/Breadcrumb';
 
 type ShipMethod = 'standard' | 'express';
 type PayMethod = 'card' | 'cod';
@@ -36,7 +37,8 @@ export default function Checkout() {
   };
 
   return (
-    <div className="wrap" style={{ padding: '36px 0 80px' }}>
+    <div className="wrap" style={{ paddingTop: '36px', paddingBottom: '80px' }}>
+      <Breadcrumb items={[{ label: 'Cart', to: '/cart' }, { label: 'Checkout' }]} />
       <h1 className="page-title">Checkout</h1>
       <div className="checkout-grid">
         <form onSubmit={handleSubmit}>

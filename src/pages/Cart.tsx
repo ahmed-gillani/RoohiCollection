@@ -3,6 +3,7 @@ import { useCart } from '@/context/CartContext';
 import { findProduct } from '@/data/products';
 import EmptyState from '@/components/EmptyState';
 import Button from '@/components/Button';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export default function Cart() {
   const { cart, subtotal, changeQty, removeFromCart } = useCart();
@@ -24,7 +25,8 @@ export default function Cart() {
   const shipping = subtotal > 150 ? 0 : 9.99;
 
   return (
-    <div className="wrap" style={{ padding: '36px 0 80px' }}>
+    <div className="wrap" style={{ paddingTop: '36px', paddingBottom: '80px' }}>
+      <Breadcrumb items={[{ label: 'Cart' }]} />
       <h1 className="page-title">Shopping Cart</h1>
       <div className="cart-grid">
         <div className="overflow-x">
