@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
+import { useTheme } from '@/context/ThemeContext';
 
 const navItems = ['Home', 'Shop', 'Boys', 'Girls', 'Infants', 'Sale'] as const;
 
@@ -46,6 +47,19 @@ const CartIcon = () => (
   </svg>
 );
 
+const SunIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+  </svg>
+);
+
+const MoonIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+);
+
 const MenuIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
     <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -58,6 +72,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { count } = useCart();
   const { wishlist } = useWishlist();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
@@ -90,6 +105,14 @@ export default function Navbar() {
             <SearchIcon />
             <input placeholder="Search products..." onKeyDown={handleSearch} aria-label="Search" />
           </div>
+          <button
+            className="icon-btn"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+          >
+            {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+          </button>
           <button className="icon-btn" onClick={() => navigate('/account')} aria-label="My Account" title="Account">
             <AccountIcon />
           </button>
@@ -134,7 +157,7 @@ export default function Navbar() {
               to={getNavHref(item)}
               onClick={() => setMenuOpen(false)}
               className={isNavActive(location, item, searchParams) ? 'active' : ''}
-              style={{ display: 'block', padding: '12px 0', borderBottom: '1px solid rgba(255,255,255,.1)' }}
+              style={{ display: 'block', padding: '12px 0', borderBottom: '1px solid var(--hdr-line)' }}
             >
               {item}
             </Link>

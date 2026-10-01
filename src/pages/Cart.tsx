@@ -37,7 +37,7 @@ export default function Cart() {
                   <div className="name">{p.name}</div>
                   <div className="opt">
                     Size: {c.size} · Color swatch:{' '}
-                    <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', background: c.color, verticalAlign: 'middle' }} />
+                    <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', background: c.color, border: '1px solid var(--line)', verticalAlign: 'middle' }} />
                   </div>
                 </div>
                 <div className="qty-row">
@@ -57,7 +57,7 @@ export default function Cart() {
           <div className="sum-row"><span>Shipping</span><span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span></div>
           <div className="sum-row total"><span>Total</span><span>${(subtotal + shipping).toFixed(2)}</span></div>
           <Button block onClick={() => navigate('/checkout')} className="mt">Proceed to Checkout</Button>
-          <Link to="/shop" style={{ display: 'block', textAlign: 'center', fontSize: 13, marginTop: 14, color: 'var(--gold-d)' }}>
+          <Link to="/shop" style={{ display: 'block', textAlign: 'center', fontSize: 13, marginTop: 14, color: 'var(--link)' }}>
             ← Continue Shopping
           </Link>
         </div>

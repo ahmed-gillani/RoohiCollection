@@ -8,6 +8,7 @@ import { WishlistProvider } from '@/context/WishlistContext';
 import { AuthProvider } from '@/context/AuthContext';
 import { ToastProvider } from '@/context/ToastContext';
 import { OrderProvider } from '@/context/OrderContext';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 import Home from '@/pages/Home';
 import Shop from '@/pages/Shop';
@@ -21,15 +22,17 @@ import NotFound from '@/pages/NotFound';
 
 function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ToastProvider>
-      <AuthProvider>
-        <WishlistProvider>
-          <CartProvider>
-            <OrderProvider>{children}</OrderProvider>
-          </CartProvider>
-        </WishlistProvider>
-      </AuthProvider>
-    </ToastProvider>
+    <ThemeProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <OrderProvider>{children}</OrderProvider>
+            </CartProvider>
+          </WishlistProvider>
+        </AuthProvider>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
 
